@@ -3,6 +3,7 @@
 let div = undefined;
 let deltaX = 0;
 let deltaY = 0;
+//let left = 0;
 
 let createElements = function() {
 	let div = document.createElement("div");
@@ -10,18 +11,30 @@ let createElements = function() {
 	if(div && div1) {
 		div.classList.add("rect");
 		document.documentElement.children[1].appendChild(div);
-		div.addEventListener("mouseenter", beReadyToMove);
-		div.addEventListener("mouseleave", lossReadynessToMove);
+		/*div.addEventListener("mouseenter", beReadyToMove);
+		div.addEventListener("mouseleave", lossReadynessToMove);*/
 		
 		div1.classList.add("rect");
 		div1.style.left = 500 + "px";
 		document.documentElement.children[1].appendChild(div1);
-		div1.addEventListener("mouseenter", beReadyToMove);
-		div1.addEventListener("mouseleave", lossReadynessToMove);
+		/*div1.addEventListener("mouseenter", beReadyToMove);
+		div1.addEventListener("mouseleave", lossReadynessToMove);*/
 	}
 }
+window.onkeydown = function move_left(){
+	let left = 0;
+	if(event.keyCode==37){
+		left-=10;
+		document.getElementsByTagName("div").style.left = left + 'px';
+	}
+		else if(event.keyCode==39){
+			left+=10;
+			document.getElementsByClassName("rect").style.left= left + 'px';
+		}
 
-let beReadyToMove = function() {
+};
+
+/*let beReadyToMove = function() {
 	this.addEventListener("mousedown", moveRect);
 	this.addEventListener("mouseup", moveRect);
 	console.log("a rect is ready focus")
@@ -53,5 +66,5 @@ let moveRectToThePointer = function(evt) {
 	this.style.left = evt.clientX - deltaX + "px";
 	this.style.top = evt.clientY - deltaY + "px";
 }
-
+*/
 document.addEventListener("DOMContentLoaded", createElements);
