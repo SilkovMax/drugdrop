@@ -3,33 +3,33 @@
 let div = undefined;
 let deltaX = 0;
 let deltaY = 0;
-//let left = 0;
+let left = 0;
 
 let createElements = function() {
 	let div = document.createElement("div");
 	let div1 = document.createElement("div");
-	if(div && div1) {
+	if(div) {
 		div.classList.add("rect");
 		document.documentElement.children[1].appendChild(div);
 		/*div.addEventListener("mouseenter", beReadyToMove);
 		div.addEventListener("mouseleave", lossReadynessToMove);*/
 		
-		div1.classList.add("rect");
+		/*div1.classList.add("rect");
 		div1.style.left = 500 + "px";
 		document.documentElement.children[1].appendChild(div1);
-		/*div1.addEventListener("mouseenter", beReadyToMove);
+		div1.addEventListener("mouseenter", beReadyToMove);
 		div1.addEventListener("mouseleave", lossReadynessToMove);*/
 	}
 }
 window.onkeydown = function move_left(){
-	let left = 0;
+	
 	if(event.keyCode==37){
-		left-=10;
-		document.getElementsByTagName("div").style.left = left + 'px';
+		left-=100;
+		document.getElementsByTagName("div")[0].style.left = left + 'px';
 	}
 		else if(event.keyCode==39){
-			left+=10;
-			document.getElementsByClassName("rect").style.left= left + 'px';
+			left+=100;
+			document.getElementsByClassName("rect")[0].style.left= left + 'px';
 		}
 
 };
