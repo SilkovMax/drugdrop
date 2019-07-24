@@ -1,8 +1,18 @@
+.cont {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+}
 .rect {
-	position: absolute;
+	position: relative;
 	width: 15vw;
 	height: 0.5vw;
 	background-color: red;
+	margin: auto;
+	margin-top: 99%;
 }
 
 .canvas {
