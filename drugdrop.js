@@ -11,6 +11,8 @@ let curleft = 0;
 let divLeft = 0;
 let offsetcanvasDiv = 0;
 
+
+
 let createElements = function() {
 	canvas = document.createElement("div");
 	div = document.createElement("div");
@@ -22,30 +24,38 @@ let createElements = function() {
 		div.setAttribute("id", "carret");
 		canvas.appendChild(div);
 		offsetcanvasDiv = div.offsetLeft - canvas.offsetLeft;
+		console.log(offsetcanvasDiv);
+		
 	}
 }
 
 window.onkeydown = function move_left(){
-	let x=canvas.offsetLeft;
-	let y=div.offsetLeft;
-	let z=y-x;
+	//let leftOfSideCanvas=canvas.offsetLeft;
+	//let leftOfSideCarret=div.offsetLeft;
+	//let distFromLeftSide=leftOfSideCarret-leftOfSideCanvas;
 	
 	
-	console.log(x);
-	console.log(y);
+	//console.log(leftOfSideCanvas);
+	//console.log(leftOfSideCarret);
+	let widthCarret = div.offsetWidth;
+	console.log(widthCarret);
+
 	if(event.keyCode==37){//левая
 		divLeft=divLeft - left;
 		if (Math.abs(divLeft) > offsetcanvasDiv - 3)
 			divLeft = -offsetcanvasDiv + 3;		
 			div.style.left = divLeft + 'px';
+			console.log(divLeft);
 	}
 	else 
 		if(event.keyCode==39){//правая
-			if (y+div.offsetWidth<x+canvas.offsetWidth){	
-				div.style.left = y + left + 'px';
-			}
-			else 
-				div.style.left = x + canvas.offsetWidth - div.offsetWidth + 'px';
+			divLeft=divLeft + left;
+			if (Math.abs(divLeft) > offsetcanvasDiv )
+			divLeft = offsetcanvasDiv - 3;		
+			div.style.left = divLeft + 'px';
+			console.log(divLeft);
+			
+			
 		}
 };
 /*
