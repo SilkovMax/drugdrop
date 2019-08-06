@@ -35,7 +35,7 @@ let createElements = function() {
 		
 		offsetcanvasDiv = div.offsetLeft - canvas.offsetLeft;
 		console.log(offsetcanvasDiv);
-		ball.style.top = (-ball.offsetWidth - 2*borderDist + canvas.offsetTop + canvas.offsetWidth -(div.getBoundingClientRect().top - div.getBoundingClientRect().bottom)) + 'px';
+		ball.style.top = carret.offsetTop - ball.offsetWidth + 'px';
 		ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 		
 	}
@@ -60,7 +60,10 @@ window.onkeydown = function move_left(){
 		if (Math.abs(divLeft) > offsetcanvasDiv - borderDist)
 			divLeft = -offsetcanvasDiv + borderDist;		
 			div.style.left = divLeft + 'px';
+			ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 			console.log(divLeft);
+			console.log(ball.style.left);
+
 	}
 	else 
 		if(event.keyCode==39){//правая
@@ -68,13 +71,14 @@ window.onkeydown = function move_left(){
 			if (Math.abs(divLeft) > offsetcanvasDiv )
 			divLeft = offsetcanvasDiv - borderDist;		
 			div.style.left = divLeft + 'px';
+			ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 			console.log(divLeft);
-			
-			
+						
 		}
 };
 
 window.onmousemove = function () {
+	
 	if (event.clientX >= canvas.offsetLeft && event.clientX <= canvas.offsetLeft + canvas.offsetWidth ) 
 		{
 			
@@ -83,12 +87,14 @@ window.onmousemove = function () {
 			if (Math.abs(divLeft) > offsetcanvasDiv - borderDist)
 			divLeft = -offsetcanvasDiv + borderDist;		
 			div.style.left = divLeft + 'px';
+			ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 		}
 		else {
 			divLeft=divLeft + left;
 			if (Math.abs(divLeft) > offsetcanvasDiv )
 			divLeft = offsetcanvasDiv - borderDist;		
 			div.style.left = divLeft + 'px';
+			ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 		}
 	deltaX = event.clientX;
 	}
