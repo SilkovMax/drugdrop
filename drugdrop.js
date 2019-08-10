@@ -14,8 +14,10 @@ let offsetcanvasDiv = 0;
 let ballX = 0;
 let ballY = 0;
 let borderDist = 3;
-
-
+let play = false;
+let timer;
+let nowBallX = 0;
+let nowBallY = 0;
 
 let createElements = function() {
 	canvas = document.createElement("div");
@@ -37,7 +39,8 @@ let createElements = function() {
 		console.log(offsetcanvasDiv);
 		ball.style.top = carret.offsetTop - ball.offsetWidth + 'px';
 		ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
-		
+		nowBallY = carret.offsetTop - ball.offsetWidth;
+		nowBallX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
 	}
 }
 
@@ -60,7 +63,10 @@ window.onkeydown = function move_left(){
 		if (Math.abs(divLeft) > offsetcanvasDiv - borderDist)
 			divLeft = -offsetcanvasDiv + borderDist;		
 			div.style.left = divLeft + 'px';
-			ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
+			if (!play) {
+				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
+				nowBallX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
+			}
 			console.log(divLeft);
 			console.log(ball.style.left);
 
@@ -71,35 +77,42 @@ window.onkeydown = function move_left(){
 			if (Math.abs(divLeft) > offsetcanvasDiv )
 			divLeft = offsetcanvasDiv - borderDist;		
 			div.style.left = divLeft + 'px';
-			ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
+			if (!play) {
+				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
+				nowBallX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
+			}
 			console.log(divLeft);
 						
 		}
+		else 
+			if(event.keyCode==32) {
+				if (!play) {
+					timer = setInterval(moveBall, 66);
+				} else {
+					clearInterval(timer);
+				}
+	 
+			}
 };
+ function moveBall () {
+	 
+ }
+ 
 
 window.onmousemove = function () {
 	
-	if (event.clientX >= canvas.offsetLeft && event.clientX <= canvas.offsetLeft + canvas.offsetWidth ) 
+	if (event.clientX >= canvas.offsetLeft + div.offsetWidth/2 && event.clientX <= canvas.offsetLeft + canvas.offsetWidth - div.offsetWidth/2) 
 		{
-			
-		if ( event.clientX < deltaX ) {
-			divLeft=divLeft - left;
-			if (Math.abs(divLeft) > offsetcanvasDiv - borderDist)
-			divLeft = -offsetcanvasDiv + borderDist;		
+			divLeft = event.clientX - canvas.offsetLeft - offsetcanvasDiv - div.offsetWidth/2 ;		
 			div.style.left = divLeft + 'px';
-			ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
+			if (!play) {
+				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
+				nowBallX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
+			}
+		
 		}
-		else {
-			divLeft=divLeft + left;
-			if (Math.abs(divLeft) > offsetcanvasDiv )
-			divLeft = offsetcanvasDiv - borderDist;		
-			div.style.left = divLeft + 'px';
-			ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
-		}
-	deltaX = event.clientX;
 	}
 	
 	
-}
 
 document.addEventListener("DOMContentLoaded", createElements);
