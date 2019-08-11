@@ -6,8 +6,6 @@ let ball;
 let deltaX = 0;
 let deltaY = 0;
 let left = 5;
-//let div1_left = 0;
-//let dist = 0;
 let curleft = 0;
 let divLeft = 0;
 let offsetcanvasDiv = 0;
@@ -34,7 +32,6 @@ let createElements = function() {
 		ball.setAttribute("id", "ball");
 		canvas.appendChild(ball);
 		
-		
 		offsetcanvasDiv = div.offsetLeft - canvas.offsetLeft;
 		console.log(offsetcanvasDiv);
 		ball.style.top = carret.offsetTop - ball.offsetWidth + 'px';
@@ -44,19 +41,9 @@ let createElements = function() {
 	}
 }
 
-
-
-
 window.onkeydown = function move_left(){
-	//let leftOfSideCanvas=canvas.offsetLeft;
-	//let leftOfSideCarret=div.offsetLeft;
-	//let distFromLeftSide=leftOfSideCarret-leftOfSideCanvas;
-	
-	
-	//console.log(leftOfSideCanvas);
-	//console.log(leftOfSideCarret);
 	let widthCarret = div.offsetWidth;
-	console.log(widthCarret);
+	//console.log(widthCarret);
 
 	if(event.keyCode==37){//левая
 		divLeft=divLeft - left;
@@ -67,9 +54,7 @@ window.onkeydown = function move_left(){
 				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 				nowBallX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
 			}
-			console.log(divLeft);
-			console.log(ball.style.left);
-
+			//console.log(ball.style.left);
 	}
 	else 
 		if(event.keyCode==39){//правая
@@ -81,8 +66,7 @@ window.onkeydown = function move_left(){
 				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 				nowBallX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
 			}
-			console.log(divLeft);
-						
+			//console.log(divLeft);
 		}
 		else 
 			if(event.keyCode==32) {
@@ -91,14 +75,30 @@ window.onkeydown = function move_left(){
 				} else {
 					clearInterval(timer);
 				}
-	 
 			}
 };
- function moveBall () {
+ function moveBall() {
+	 //ball.style.top = carret.offsetTop - ball.offsetWidth - 3 + 'px';
 	 
- }
- 
-
+	 
+ };
+canvas.onclick = function(event) {
+	let canvasCoords = this.getBoundingClientRect();
+	let ballCoords = {
+		top: event.clientY - canvasCoords.top - canvas.clientTop - ball.clientHeight/2,
+		left: event.clientX - canvasCoords.left - canvas.clientLeft - ball.clientWidth/2
+	};
+	 if (ballCoords.top < 0) ballCoords.top = 0;
+	 if (ballCoords.left < 0) ballCoords.left = 0;
+	 if (ballCoords.left + ball.clientWidth > canvas.clientWidth) {
+        ballCoords.left = canvas.clientWidth - ball.clientWidth;
+        }
+	 if (ballCoords.top + ball.clientHeight > canvas.clientHeight) {
+        ballCoords.top = canvas.clientHeight - ball.clientHeight;
+       }
+	 ball.style.left = ballCoords.left + 'px';
+     ball.style.top = ballCoords.top + 'px';
+}
 window.onmousemove = function () {
 	
 	if (event.clientX >= canvas.offsetLeft + div.offsetWidth/2 && event.clientX <= canvas.offsetLeft + canvas.offsetWidth - div.offsetWidth/2) 
@@ -108,11 +108,17 @@ window.onmousemove = function () {
 			if (!play) {
 				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 				nowBallX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
+			console.log(divLeft);
+			console.log(canvas.offsetLeft);
+			console.log(offsetcanvasDiv);
+			console.log(div.offsetWidth/2);
+			console.log(event.clientX);
+			
 			}
 		
 		}
 	}
 	
-	
+
 
 document.addEventListener("DOMContentLoaded", createElements);
