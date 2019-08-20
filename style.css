@@ -9,10 +9,11 @@
 .rect {
 	position: relative;
 	width: 15vw;
-	height: 0.5vw;
+	height: 0.7vw;
 	background-color: red;
 	margin: auto;
-	margin-top: 99%;
+	margin-top: 97%;
+	
 }
 
 .canvas {
@@ -20,6 +21,7 @@
 	width: 40vw;
 	height: 40vw;
 	border: 3px solid #111;
+	//position:relative;
 }
 .ball	{
 	position: absolute;

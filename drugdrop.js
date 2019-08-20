@@ -14,8 +14,9 @@ let ballY = 0;
 let borderDist = 3;
 let play = false;
 let timer;
-let nowBallX = 0;
-let nowBallY = 0;
+let mX =0;
+let mY =0;
+let nowBallX =0;
 
 let createElements = function() {
 	canvas = document.createElement("div");
@@ -36,8 +37,8 @@ let createElements = function() {
 		//console.log(offsetcanvasDiv);
 		ball.style.top = carret.offsetTop - ball.offsetWidth + 'px';
 		ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
-		nowBallY = carret.offsetTop - ball.offsetWidth;
-		nowBallX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;	
+		ballY = carret.offsetTop - ball.offsetWidth;
+		ballX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;	
 	}
 }
 
