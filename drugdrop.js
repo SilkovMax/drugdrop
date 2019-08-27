@@ -16,7 +16,7 @@ let play = false;
 let timer;
 let mX =0;
 let mY =0;
-let nowBallX =0;
+let speedBall = 0.1;
 
 let createElements = function() {
 	canvas = document.createElement("div");
