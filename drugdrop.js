@@ -11,12 +11,19 @@ let divLeft = 0;
 let offsetcanvasDiv = 0;
 let ballX = 0;
 let ballY = 0;
+let curBallX = 0;
+let curBallY = 0;
 let borderDist = 3;
 let play = false;
 let timer;
 let mX =0;
 let mY =0;
 let speedBall = 0.1;
+let AY = 0, AX = 0;
+let topCanvas = 0; 
+let leftCanvas = 0;
+let bottomCanvas = 0;
+let rightCanvas	= 0;
 
 let createElements = function() {
 	canvas = document.createElement("div");
@@ -39,8 +46,22 @@ let createElements = function() {
 		ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 		ballY = carret.offsetTop - ball.offsetWidth;
 		ballX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;	
+		topCanvas = canvas.offsetTop + borderDist;
+		leftCanvas = canvas.offsetLeft + borderDist;
+		bottomCanvas = canvas.offsetTop - borderDist + canvas.offsetWidth;
+		rightCanvas	= canvas.offsetLeft - borderDist + canvas.offsetWidth;
 	}
 }
+
+let a = 2;
+let b = 3;
+let c = 0;
+function multiply(a,b){
+  c = a * b;
+  return
+};
+
+console.log(c);
 
 createElements();
 //document.addEventListener("DOMContentLoaded", createElements);

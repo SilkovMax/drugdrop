@@ -3,6 +3,7 @@
 //let canvas = document.getElementById("canvas");
 
 window.onkeydown = function move_left(){
+	
 	let widthCarret = div.offsetWidth;
 	console.log(this);
 
@@ -11,11 +12,11 @@ window.onkeydown = function move_left(){
 		if (Math.abs(divLeft) > offsetcanvasDiv - 2*borderDist)
 			divLeft = -offsetcanvasDiv + borderDist;		
 			div.style.left = divLeft + 'px';
-			if (!play) {
+			if (!play && (ballY > (carret.offsetTop - ball.offsetWidth -1)) ) {
 				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 				ballX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
 			}
-			//console.log(ball.style.left);
+			//console.log(ballY + " " + carret.offsetTop - ball.offsetWidth);
 	}
 	else 
 		if(event.keyCode==39){//правая
@@ -23,7 +24,7 @@ window.onkeydown = function move_left(){
 			if (Math.abs(divLeft) > offsetcanvasDiv )
 			divLeft = offsetcanvasDiv - borderDist;		
 			div.style.left = divLeft + 'px';
-			if (!play) {
+			if (!play && (ballY > (carret.offsetTop - ball.offsetWidth -1)) ) {
 				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 				ballX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
 			}
@@ -31,7 +32,12 @@ window.onkeydown = function move_left(){
 		}
 		else 
 			if(event.keyCode==32) {
+				
 				if (!play) {
+					curBallX = ballX;
+					curBallY = ballY;
+					AY = topCanvas + 1;
+					AX = (rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1;
 					play = true;
 					timer = setInterval(moveBall, 66);
 				} else {
@@ -49,37 +55,56 @@ window.onmousemove = function () {
 		{
 			divLeft = event.clientX - canvas.offsetLeft - offsetcanvasDiv - div.offsetWidth/2;		
 			div.style.left = divLeft + 'px';
-			if (!play) {
+			if (!play && (ballY > (carret.offsetTop - ball.offsetWidth -1)) ) {
 				ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
 				ballX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;
+				
 						
 			}
-		
+		console.log(ballY + " " + (carret.offsetTop - ball.offsetWidth));
 		}
 	 
 	}
 	
 function moveBall() {
-		
-		let topCanvas = canvas.offsetTop + borderDist;
-		let leftCanvas = canvas.offsetLeft + borderDist;
-		let bottomCanvas = canvas.offsetTop - borderDist + canvas.offsetWidth;
-		let rightCanvas	= canvas.offsetLeft - borderDist + canvas.offsetWidth;
-		console.log(mX + " " + mY);
 				
-		let a = (ballY - mY) / (ballX - mX);
+				
+		let a = (ballY - AY) / (ballX - AX);
 		let b = ballY - a * ballX;
-		ballX = (mX - ballX)/(1/speedBall) + ballX;
+		ballX = (AX - curBallX)/(1/speedBall) + ballX;
 		ballY = a * ballX + b;
 		console.log(ballX + " " + ballY);
 					
-		 if (mY < topCanvas) ballY = topCanvas;
-		 if (mX < leftCanvas) ballX = leftCanvas;
-		 if (mX > rightCanvas - ball.offsetWidth) {
+		 if (ballY < topCanvas) {
+			 ballY = topCanvas;
+			 curBallX = ballX;
+			 curBallY = ballY;
+			 if (a > 0)
+				AX  = leftCanvas + 1;
+			else 
+				AX  = rightCanvas - 1;
+			 AY = (bottomCanvas - topCanvas -2)* Math.random() + topCanvas +1; 
+		}
+		 if (ballX < leftCanvas)  {
+			 ballX = leftCanvas;
+			 curBallX = ballX;
+			 curBallY = ballY;
+			 AY  = bottomCanvas - 1;
+			 AX = (rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1; 
+		}
+		 if (ballX > rightCanvas - ball.offsetWidth) {
 			ballX = rightCanvas- ball.offsetWidth;
+			curBallX = ballX;
+			curBallY = ballY;
+			AY  = bottomCanvas - 1;
+			AX = (rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1; 
 			}
-		 if (mY > bottomCanvas - ball.offsetWidth) {
+		 if (ballY > bottomCanvas - ball.offsetWidth) {
 			ballY = bottomCanvas - ball.offsetWidth;
+			curBallX = ballX;
+			curBallY = ballY;
+			AY = topCanvas + 1;
+			AX = (rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1;
 		   }
 		 ball.style.left = ballX + 'px';
 		 ball.style.top = ballY + 'px';
