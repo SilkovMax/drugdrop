@@ -5,7 +5,7 @@ let canvas;
 let ball;
 let deltaX = 0;
 let deltaY = 0;
-let left = 5;
+let left = 15; //скорость каретки
 let curleft = 0;
 let divLeft = 0;
 let offsetcanvasDiv = 0;
@@ -15,10 +15,11 @@ let curBallX = 0;
 let curBallY = 0;
 let borderDist = 3;
 let play = false;
+let pause = false;
 let timer;
 let mX =0;
 let mY =0;
-let speedBall = 0.1;
+let speedBall = 0.08;//скорость шарика, чем меньше, тем медленее
 let AY = 0, AX = 0;
 let topCanvas = 0; 
 let leftCanvas = 0;
@@ -41,11 +42,10 @@ let createElements = function() {
 		canvas.appendChild(ball);
 		
 		offsetcanvasDiv = div.offsetLeft - canvas.offsetLeft;
-		//console.log(offsetcanvasDiv);
 		ball.style.top = carret.offsetTop - ball.offsetWidth + 'px';
-		ball.style.left = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2  + 'px';
+		ball.style.left = Math.floor(div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2 ) + 'px';
 		ballY = carret.offsetTop - ball.offsetWidth;
-		ballX = div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2;	
+		ballX = Math.floor(div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2);	
 		topCanvas = canvas.offsetTop + borderDist;
 		leftCanvas = canvas.offsetLeft + borderDist;
 		bottomCanvas = canvas.offsetTop - borderDist + canvas.offsetWidth;
@@ -53,15 +53,5 @@ let createElements = function() {
 	}
 }
 
-let a = 2;
-let b = 3;
-let c = 0;
-function multiply(a,b){
-  c = a * b;
-  return
-};
 
-console.log(c);
-
-createElements();
-//document.addEventListener("DOMContentLoaded", createElements);
+document.addEventListener("DOMContentLoaded", createElements);
