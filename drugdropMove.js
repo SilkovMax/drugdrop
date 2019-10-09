@@ -1,141 +1,129 @@
 'use strict'
 
-//let canvas = document.getElementById("canvas");
+
+function directBall() {
+	let randC = ballX - Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1);
+	if(randC == 0) {
+		let sign = 1;
+		randC = Math.random();
+		if(randC < 0.5) {
+			sign = -1;
+		}
+		randC =(Math.floor(Math.random() * (4-1))+1) * sign;
+	}
+	let randA = ballY - (topCanvas + 1);
+	if(randA == 0) {
+		let sign = 1;
+		randA = Math.random();
+		if(randA < 0.5) {
+			sign = -1;
+		}
+		randA =(Math.floor(Math.random() * (4-1))+1) * sign;
+	}
+	a = randA / randC;//коэф-т траектории движения
+	b = ballY - a * ballX;
+}
+
 
 window.onkeydown = function move_left(){
 	
-	let widthCarret = div.offsetWidth;
-	console.log(this);
-
+	
 	if(event.keyCode==37 && play){//левая
 		divLeft=divLeft - left;
-		if (Math.abs(divLeft) > offsetcanvasDiv - 2*borderDist)
-			divLeft = -offsetcanvasDiv + borderDist;		
-			div.style.left = divLeft + 'px';
-			if (!play && (ballY > (carret.offsetTop - ball.offsetWidth -1)) ) {
-				ballX = Math.floor(div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2);
-				ball.style.left = ballX + 'px';
-			}
-			//console.log(ballY + " " + carret.offsetTop - ball.offsetWidth);
-	}
-	else 
-		if(event.keyCode==39 && play){//правая
+		if (Math.abs(divLeft) > offsetcanvasDiv - 2*borderDist) divLeft = -offsetcanvasDiv + borderDist;		
+		div.style.left = divLeft + 'px';
+	}	
+	else if(event.keyCode==39 && play){//правая
 			divLeft=divLeft + left;
-			if (Math.abs(divLeft) > offsetcanvasDiv )
-			divLeft = offsetcanvasDiv - borderDist;		
+			if (Math.abs(divLeft) > offsetcanvasDiv ) divLeft = offsetcanvasDiv - borderDist;		
 			div.style.left = divLeft + 'px';
-			if (!play && (ballY > (carret.offsetTop - ball.offsetWidth -1)) ) {
-				ballX = Math.floor(div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2);
-				ball.style.left = ballX + 'px';
-			}
-			//console.log(divLeft);
 		}
-		else 
-			if(event.keyCode==32) {
-				
-				if (!play) {
-					if (!pause) {
-					pause = true;
-					curBallX = ballX;
-					curBallY = ballY;
-					AY = topCanvas + 1;
-					AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1);
-					
-					}
-					play = true;
-					timer = setInterval(moveBall, 66);
-				} else {
-					play = false;
-					clearInterval(timer);
-				}
+	else if(event.keyCode==32) {
+		
+		if (!play) {
+			if (!pause) {
+				pause = true;
+				directBall();
 			}
+			play = true;
+			timer = setInterval(moveBall, 66);
+		} else {
+			play = false;
+			clearInterval(timer);
+		}
+	}
 };
 
 window.onmousemove = function () {
-	mX = event.clientX;
-	mY = event.clientY;
-      
 	if (play && event.clientX >= canvas.offsetLeft+ borderDist + div.offsetWidth/2 && event.clientX <= canvas.offsetLeft + canvas.offsetWidth - div.offsetWidth/2 - borderDist) 
-		{
-			divLeft = event.clientX - canvas.offsetLeft - offsetcanvasDiv - div.offsetWidth/2;		
-			div.style.left = divLeft + 'px';
-			if (!play && (ballY > (carret.offsetTop - ball.offsetWidth -1)) ) {
-				
-				ballX = Math.floor(div.offsetLeft + div.offsetWidth/2 - ball.offsetWidth/2);
-				ball.style.left = ballX + 'px';
-				
-						
-			}
-		console.log(ballY + " " + (carret.offsetTop - ball.offsetWidth));
-		}
-	 
+	{
+		divLeft = event.clientX - canvas.offsetLeft - offsetcanvasDiv - div.offsetWidth/2;		
+		div.style.left = divLeft + 'px';
 	}
-	
+}
 function moveBall() {
 				
 		let randC = ballX - AX;
-			if(randC == 0) {
-				let sign = 1;
-				randC = Math.random();
-				if(randC < 0.5) {
-					sign = -1;
-				}
-										
-				randC =(Math.floor(Math.random() * (4-1))+1) * sign;
-				
+		if(randC == 0) {
+			let sign = 1;
+			randC = Math.random();
+			if(randC < 0.5) {
+				sign = -1;
 			}
+			randC =(Math.floor(Math.random() * (4-1))+1) * sign;
+		}
 		let randA = ballY - AY;
 		if(randA == 0) {
-				let sign = 1;
-				randA = Math.random();
-				if(randA < 0.5) {
-					sign = -1;
-				}
-										
-				randA =(Math.floor(Math.random() * (4-1))+1) * sign;
-				
+			let sign = 1;
+			randA = Math.random();
+			if(randA < 0.5) {
+				sign = -1;
 			}
+			randA =(Math.floor(Math.random() * (4-1))+1) * sign;
+		}
 		
-		let a = randA / randC;
-		let b = ballY - a * ballX;
-		//console.log(randA + " " + randC);
-		ballX = Math.floor((AX - curBallX)/(1/speedBall) + ballX);
+		
+		ballX = Math.floor(ballX + Math.sqrt(1-1/(1+Math.pow(a,2))) * speedBall);
 		ballY = Math.floor(a * ballX + b)
 		
+		/*let a,b,A,B,C
+		let vector1 , vector2
+		function nextPoint(speedBall,curBallX,curBallY,a,b,direct) {
+			A = Math.pow(a,2) + 1;
+			B = (-2*curBallX)-2*a*curBallY + 2*a*b;
+			C = Math.pow(curBallX,2) - Math.pow(speedBall,2) + Math.pow(curBallY,2) - b*curBallY + Math.pow(b,2);
+			
+			vector1 = (-B + Math.sqrt(Math.pow(B,2) - A*C))/2*A;
+			vector2 = (-B - Math.sqrt(Math.pow(B,2) - A*C))/2*A;
+			
+			if {
+				
+				
+			}
+			direct
+			switch(direct)
+			
+		}*/
 					
 		 if (ballY < topCanvas) {
 			 ballY = topCanvas;
-			 curBallX = ballX;
-			 curBallY = ballY;
-			 if (a > 0)
-				AX  = leftCanvas + 1;
-			else 
-				AX  = rightCanvas - 1;
-			 AY = Math.floor((bottomCanvas - topCanvas -2)* Math.random() + topCanvas +1); 
+			 if (a > 0) AX  = leftCanvas + 1;
+			 directBall();
 		}
 		 if (ballX < leftCanvas)  {
 			 ballX = leftCanvas;
-			 curBallX = ballX;
-			 curBallY = ballY;
-			 AY  = bottomCanvas - 1;
+			 AY = bottomCanvas - 1;
 			 AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1); 
-			 console.log(AX);
-		}
+	}
 		 if (ballX > rightCanvas - ball.offsetWidth) {
 			ballX = rightCanvas- ball.offsetWidth;
-			curBallX = ballX;
-			curBallY = ballY;
-			AY  = bottomCanvas - 1;
+			AY = bottomCanvas - 1;
 			AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1); 
-			console.log(AX);
 			}
 		 if (ballY > bottomCanvas - ball.offsetWidth) {
 			ballY = bottomCanvas - ball.offsetWidth;
-			curBallX = ballX;
-			curBallY = ballY;
 			AY = topCanvas + 1;
 			AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1);
-			console.log(AX);
 		   }
 		 ball.style.left = ballX + 'px';
 		 ball.style.top = ballY + 'px';

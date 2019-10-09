@@ -3,28 +3,22 @@
 let div;
 let canvas;
 let ball;
-let deltaX = 0;
-let deltaY = 0;
 let left = 15; //скорость каретки
-let curleft = 0;
 let divLeft = 0;
 let offsetcanvasDiv = 0;
-let ballX = 0;
+let ballX = 0;//положение шарика по оси Х
 let ballY = 0;
-let curBallX = 0;
-let curBallY = 0;
 let borderDist = 3;
 let play = false;
 let pause = false;
 let timer;
-let mX =0;
-let mY =0;
-let speedBall = 0.08;//скорость шарика, чем меньше, тем медленее
-let AY = 0, AX = 0;
+let speedBall = 10;//скорость шарика, чем меньше, тем медленее
 let topCanvas = 0; 
 let leftCanvas = 0;
 let bottomCanvas = 0;
 let rightCanvas	= 0;
+let a;//направление
+let b;
 
 let createElements = function() {
 	canvas = document.createElement("div");
