@@ -11,17 +11,10 @@ function directBall() {
 		}
 		randC =(Math.floor(Math.random() * (4-1))+1) * sign;
 	}
-	let randA = ballY - (topCanvas + 1);
-	if(randA == 0) {
-		let sign = 1;
-		randA = Math.random();
-		if(randA < 0.5) {
-			sign = -1;
-		}
-		randA =(Math.floor(Math.random() * (4-1))+1) * sign;
-	}
-	a = randA / randC;//коэф-т траектории движения
+	a = (ballY - (topCanvas + 1))/ randC;//коэф-т траектории движения
 	b = ballY - a * ballX;
+	console.log("a= " + a + " b= " + b);
+	console.log("ballY= " + ballY + " ballX= " + ballX);
 }
 
 
@@ -46,7 +39,7 @@ window.onkeydown = function move_left(){
 				directBall();
 			}
 			play = true;
-			timer = setInterval(moveBall, 66);
+			timer = setInterval(moveBall, 66);//setTimeout+
 		} else {
 			play = false;
 			clearInterval(timer);
@@ -62,12 +55,12 @@ window.onmousemove = function () {
 	}
 }
 function moveBall() {
-				
+		/*		
 		let randC = ballX - AX;
 		if(randC == 0) {
 			let sign = 1;
 			randC = Math.random();
-			if(randC < 0.5) {
+	 		if(randC < 0.5) {
 				sign = -1;
 			}
 			randC =(Math.floor(Math.random() * (4-1))+1) * sign;
@@ -75,16 +68,29 @@ function moveBall() {
 		let randA = ballY - AY;
 		if(randA == 0) {
 			let sign = 1;
-			randA = Math.random();
+			randA = Math.random();//может оставить только +1 , смысл шарик вниз пускать
 			if(randA < 0.5) {
 				sign = -1;
 			}
 			randA =(Math.floor(Math.random() * (4-1))+1) * sign;
 		}
-		
-		
-		ballX = Math.floor(ballX + Math.sqrt(1-1/(1+Math.pow(a,2))) * speedBall);
+		*/
+		let A,B,C,x1,x2
+		A = Math.pow(a,2) + 1;
+		B = 2*a*b*-2*a*ballY-2*ballX;
+		C = Math.pow(b,2) - 2*b*ballY + Math.pow(ballY,2) + Math.pow(ballX,2) - Math.pow(speedBall,2);
+		x1 = (-B + Math.sqrt(Math.pow(B,2) - 4*A*C))/2*A;
+		x2 = (-B - Math.sqrt(Math.pow(B,2) - 4*A*C))/2*A;
+		if (a<0) {
+			if(x1 > ballX){
+				ballX
+			}
+		}
+		if (a>0) ballX = Math.floor(ballX - Math.sqrt(1-1/(1+Math.pow(a,2))) * speedBall);
+		else ballX = Math.floor(ballX + Math.sqrt(1-1/(1+Math.pow(a,2))) * speedBall);
 		ballY = Math.floor(a * ballX + b)
+		
+		console.log("ballY= " + ballY + " ballX= " + ballX);
 		
 		/*let a,b,A,B,C
 		let vector1 , vector2
@@ -106,28 +112,29 @@ function moveBall() {
 		}*/
 					
 		 if (ballY < topCanvas) {
-			 ballY = topCanvas;
-			 if (a > 0) AX  = leftCanvas + 1;
-			 directBall();
+			//ballY = topCanvas;
+			 //if (a > 0) AX  = leftCanvas + 1;
+			 //directBall();
+			 clearInterval(timer);
 		}
 		 if (ballX < leftCanvas)  {
-			 ballX = leftCanvas;
-			 AY = bottomCanvas - 1;
-			 AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1); 
+			 //ballX = leftCanvas;
+			// AY = bottomCanvas - 1;
+			 //AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1); 
 	}
 		 if (ballX > rightCanvas - ball.offsetWidth) {
-			ballX = rightCanvas- ball.offsetWidth;
-			AY = bottomCanvas - 1;
-			AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1); 
+			//ballX = rightCanvas- ball.offsetWidth;
+			//AY = bottomCanvas - 1;
+			//AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1); 
 			}
 		 if (ballY > bottomCanvas - ball.offsetWidth) {
-			ballY = bottomCanvas - ball.offsetWidth;
-			AY = topCanvas + 1;
-			AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1);
+			//ballY = bottomCanvas - ball.offsetWidth;
+			//AY = topCanvas + 1;
+			//AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1);
 		   }
 		 ball.style.left = ballX + 'px';
 		 ball.style.top = ballY + 'px';
-		 console.log(ballX + " " + ballY + " " + AX + " " + AY + " " + a + " " + b);
+		 //console.log(ballX + " " + ballY + " " + AX + " " + AY + " " + a + " " + b);
 
 	
 }	

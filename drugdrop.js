@@ -19,6 +19,8 @@ let bottomCanvas = 0;
 let rightCanvas	= 0;
 let a;//направление
 let b;
+let AX = 0;
+let AY = 0;
 
 let createElements = function() {
 	canvas = document.createElement("div");
