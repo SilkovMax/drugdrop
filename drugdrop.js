@@ -21,6 +21,7 @@ let a;//направление
 let b;
 let AX = 0;
 let AY = 0;
+let deltaX =0;
 
 let createElements = function() {
 	canvas = document.createElement("div");
