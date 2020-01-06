@@ -22,7 +22,7 @@ function directBall() {
 	x1 = Math.floor((-B + Math.sqrt(Math.pow(B,2) - 4*A*C))/(2*A));
 	x2 = Math.floor((-B - Math.sqrt(Math.pow(B,2) - 4*A*C))/(2*A));
 	console.log("x1 = " + x1 + ", x2 = " + x2);
-	
+
 	if (a<0) {
 	if(x1 != ballX){
 		ballY = Math.floor(a*x1+b);
@@ -35,7 +35,7 @@ function directBall() {
 		//deltaX = x2;
 	}
 	}
-	
+
 
 	console.log("a= " + a + " b= " + b);
 	console.log("ballY= " + ballY + " ballX= " + ballX);
@@ -43,20 +43,20 @@ function directBall() {
 
 
 window.onkeydown = function move_left(){
-	
-	
+
+
 	if(event.keyCode==37 && play){//левая
 		divLeft=divLeft - left;
-		if (Math.abs(divLeft) > offsetcanvasDiv - 2*borderDist) divLeft = -offsetcanvasDiv + borderDist;		
+		if (Math.abs(divLeft) > offsetcanvasDiv - 2*borderDist) divLeft = -offsetcanvasDiv + borderDist;
 		div.style.left = divLeft + 'px';
-	}	
+	}
 	else if(event.keyCode==39 && play){//правая
 			divLeft=divLeft + left;
-			if (Math.abs(divLeft) > offsetcanvasDiv ) divLeft = offsetcanvasDiv - borderDist;		
+			if (Math.abs(divLeft) > offsetcanvasDiv ) divLeft = offsetcanvasDiv - borderDist;
 			div.style.left = divLeft + 'px';
 		}
 	else if(event.keyCode==32) {
-		
+
 		if (!play) {
 			if (!pause) {
 				pause = true;
@@ -72,18 +72,18 @@ window.onkeydown = function move_left(){
 };
 
 window.onmousemove = function () {
-	if (play && event.clientX >= canvas.offsetLeft+ borderDist + div.offsetWidth/2 && event.clientX <= canvas.offsetLeft + canvas.offsetWidth - div.offsetWidth/2 - borderDist) 
+	if (play && event.clientX >= canvas.offsetLeft+ borderDist + div.offsetWidth/2 && event.clientX <= canvas.offsetLeft + canvas.offsetWidth - div.offsetWidth/2 - borderDist)
 	{
-		divLeft = event.clientX - canvas.offsetLeft - offsetcanvasDiv - div.offsetWidth/2;		
+		divLeft = event.clientX - canvas.offsetLeft - offsetcanvasDiv - div.offsetWidth/2;
 		div.style.left = divLeft + 'px';
 	}
 }
 function moveBall() {
 		ballX += deltaX;
 		ballY = a*ballX + b;
-		
-	
-					
+
+
+
 		 if (ballY < topCanvas) {
 			//ballY = topCanvas;
 			 //if (a > 0) AX  = leftCanvas + 1;
@@ -93,12 +93,12 @@ function moveBall() {
 		 if (ballX < leftCanvas)  {
 			 //ballX = leftCanvas;
 			// AY = bottomCanvas - 1;
-			 //AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1); 
+			 //AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1);
 	}
 		 if (ballX > rightCanvas - ball.offsetWidth) {
 			//ballX = rightCanvas- ball.offsetWidth;
 			//AY = bottomCanvas - 1;
-			//AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1); 
+			//AX = Math.floor((rightCanvas - leftCanvas -2)* Math.random() + leftCanvas +1);
 			}
 		 if (ballY > bottomCanvas - ball.offsetWidth) {
 			//ballY = bottomCanvas - ball.offsetWidth;
@@ -109,6 +109,5 @@ function moveBall() {
 		 ball.style.top = ballY + 'px';
 		 console.log(ballX + " " + ballY + " " + a + " " + b);
 
-	
-}	
-	
+
+}
